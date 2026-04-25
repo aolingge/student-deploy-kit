@@ -1,10 +1,10 @@
 # Student Deploy Kit
 
+Languages: English | [简体中文](README.zh-CN.md)
+
 Student Deploy Kit is a beginner-friendly deployment toolkit for students, indie developers, and personal website maintainers.
 
 It collects copy-ready Nginx configs, Spring Boot deployment scripts, frontend deployment templates, Docker Compose examples, and server security checklists in one repository.
-
-中文说明：[README.zh-CN.md](README.zh-CN.md)
 
 ## Who This Helps
 

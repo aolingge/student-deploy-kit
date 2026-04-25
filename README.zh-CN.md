@@ -1,5 +1,7 @@
 # Student Deploy Kit
 
+语言： [English](README.md) | 简体中文
+
 专为学生、独立开发者、毕设项目和个人网站准备的部署工具包。
 
 这个仓库把常见部署坑整理成可复制使用的模板：Nginx 配置、Spring Boot 部署脚本、Vue/React 静态站点部署、Docker Compose、服务器安全基线、常见问题排查。
