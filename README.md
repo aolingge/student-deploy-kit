@@ -22,12 +22,31 @@
   <a href="https://github.com/aolingge/student-deploy-kit/actions/workflows/validate.yml"><img src="https://img.shields.io/github/actions/workflow/status/aolingge/student-deploy-kit/validate.yml?branch=main&style=flat-square&label=templates" alt="Validation status" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/aolingge/student-deploy-kit?style=flat-square" alt="MIT license" /></a>
   <a href="https://github.com/aolingge/student-deploy-kit/releases"><img src="https://img.shields.io/github/v/release/aolingge/student-deploy-kit?style=flat-square" alt="Latest release" /></a>
-  <img src="https://img.shields.io/badge/Nginx-ready-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx ready" />
-  <img src="https://img.shields.io/badge/Spring%20Boot-ready-6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot ready" />
   <img src="https://img.shields.io/badge/Docker-compose-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Compose" />
 </p>
 
 ---
+
+<table>
+  <tr>
+    <td width="25%" valign="top">
+      <b><a href="nginx-configs/">Nginx & HTTPS</a></b><br />
+      Reverse proxy, TLS, CORS, security headers.
+    </td>
+    <td width="25%" valign="top">
+      <b><a href="springboot-deploy/">Spring Boot Deploy</a></b><br />
+      systemd, jar release, logs, health checks.
+    </td>
+    <td width="25%" valign="top">
+      <b><a href="frontend-deploy/">Frontend Deploy</a></b><br />
+      dist upload, static sites, SPA fallback.
+    </td>
+    <td width="25%" valign="top">
+      <b><a href="server-security/">Server Security</a></b><br />
+      SSH, firewall, fail2ban, baseline hardening.
+    </td>
+  </tr>
+</table>
 
 ## Why This Exists
 
@@ -80,6 +99,15 @@ sudo cp nginx-configs/fullstack-springboot.conf /etc/nginx/sites-available/demo.
 sudo ln -s /etc/nginx/sites-available/demo.conf /etc/nginx/sites-enabled/demo.conf
 sudo nginx -t && sudo systemctl reload nginx
 ```
+
+You know it worked when:
+
+```bash
+curl -I http://example.com
+sudo systemctl status demo-api --no-pager
+```
+
+Nginx should return `200` or `301`, and `demo-api` should be `active (running)`.
 
 ## Recipes
 
