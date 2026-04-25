@@ -48,6 +48,10 @@
   </tr>
 </table>
 
+<p align="center">
+  <img src="assets/deploy-flow.svg" alt="Deployment flow from browser to Nginx to frontend and Spring Boot" width="92%" />
+</p>
+
 ## Why This Exists
 
 Most student projects do not fail at coding. They fail at the last mile:

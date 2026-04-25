@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="300" viewBox="0 0 980 300" role="img" aria-label="Student Deploy Kit deployment flow">
+  <rect width="980" height="300" rx="22" fill="#fffaf0"/>
+  <rect x="34" y="56" width="172" height="92" rx="16" fill="#0f1f1e"/>
+  <text x="78" y="94" font-family="Inter, Arial, sans-serif" font-size="20" fill="#fffaf0" font-weight="800">Browser</text>
+  <text x="70" y="124" font-family="Consolas, Menlo, monospace" font-size="15" fill="#e6b85c">example.com</text>
+  <path d="M222 102h106" stroke="#bd5539" stroke-width="5" stroke-linecap="round"/>
+  <path d="m316 88 18 14-18 14" fill="none" stroke="#bd5539" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="350" y="42" width="218" height="122" rx="18" fill="#173b37"/>
+  <text x="422" y="88" font-family="Inter, Arial, sans-serif" font-size="22" fill="#fffaf0" font-weight="800">Nginx</text>
+  <text x="386" y="122" font-family="Consolas, Menlo, monospace" font-size="15" fill="#f6f1e7">/ -> dist</text>
+  <text x="386" y="146" font-family="Consolas, Menlo, monospace" font-size="15" fill="#f6f1e7">/api -> app.jar</text>
+  <path d="M586 88h100" stroke="#bd5539" stroke-width="5" stroke-linecap="round"/>
+  <path d="m674 74 18 14-18 14" fill="none" stroke="#bd5539" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="708" y="42" width="220" height="122" rx="18" fill="#bd5539"/>
+  <text x="756" y="88" font-family="Inter, Arial, sans-serif" font-size="22" fill="#fffaf0" font-weight="800">Spring Boot</text>
+  <text x="750" y="122" font-family="Consolas, Menlo, monospace" font-size="15" fill="#fffaf0">127.0.0.1:8080</text>
+  <rect x="350" y="198" width="218" height="58" rx="14" fill="#eadfcd"/>
+  <text x="394" y="234" font-family="Inter, Arial, sans-serif" font-size="18" fill="#0f1f1e" font-weight="800">systemd keeps it alive</text>
+  <path d="M460 178v20" stroke="#bd5539" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -48,6 +48,10 @@
   </tr>
 </table>
 
+<p align="center">
+  <img src="assets/deploy-flow.svg" alt="Deployment flow from browser to Nginx to frontend and Spring Boot" width="92%" />
+</p>
+
 ## 为什么做这个项目
 
 很多学生项目不是卡在代码，而是卡在最后一步部署：
