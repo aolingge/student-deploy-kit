@@ -185,3 +185,12 @@ GitHub Actions 会在每次 push 和 pull request 时执行模板校验。
 ## License
 
 MIT
+
+
+## Quality Gate
+
+Use this project as a repeatable gate before an AI agent marks work as done:
+
+- [Quality gate guide](docs/quality-gates.md)
+- [Copy-ready GitHub Actions example](examples/github-action.yml)
+
