@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+*.log
+logs/
+dist/
+build/
+target/
+node_modules/
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,18 @@
+[Unit]
+Description={{APP_NAME}} Spring Boot application
+After=network.target
+
+[Service]
+Type=simple
+User={{RUN_USER}}
+WorkingDirectory={{DEPLOY_DIR}}
+EnvironmentFile={{DEPLOY_DIR}}/.env
+ExecStart=/usr/bin/java $JAVA_OPTS -jar {{DEPLOY_DIR}}/app.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=8
+StandardOutput=append:{{DEPLOY_DIR}}/logs/app.log
+StandardError=append:{{DEPLOY_DIR}}/logs/error.log
+
+[Install]
+WantedBy=multi-user.target
