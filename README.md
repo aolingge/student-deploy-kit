@@ -1,82 +1,154 @@
-# Student Deploy Kit
+<p align="center">
+  <img src="assets/readme-banner.svg" alt="Student Deploy Kit banner" width="100%" />
+</p>
 
-Languages: English | [简体中文](README.zh-CN.md)
+<h1 align="center">Student Deploy Kit</h1>
 
-Student Deploy Kit is a beginner-friendly deployment toolkit for students, indie developers, and personal website maintainers.
+<p align="center">
+  <b>Copy-ready deployment templates for student projects, graduation demos, and indie web apps.</b>
+</p>
 
-It collects copy-ready Nginx configs, Spring Boot deployment scripts, frontend deployment templates, Docker Compose examples, and server security checklists in one repository.
+<p align="center">
+  <a href="README.zh-CN.md">简体中文</a>
+  ·
+  <a href="#quick-start">Quick Start</a>
+  ·
+  <a href="#recipes">Recipes</a>
+  ·
+  <a href="#good-first-issues">Contribute</a>
+</p>
 
-## Who This Helps
+<p align="center">
+  <a href="https://github.com/aolingge/student-deploy-kit/actions/workflows/validate.yml"><img src="https://img.shields.io/github/actions/workflow/status/aolingge/student-deploy-kit/validate.yml?branch=main&style=flat-square&label=templates" alt="Validation status" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/aolingge/student-deploy-kit?style=flat-square" alt="MIT license" /></a>
+  <a href="https://github.com/aolingge/student-deploy-kit/releases"><img src="https://img.shields.io/github/v/release/aolingge/student-deploy-kit?style=flat-square" alt="Latest release" /></a>
+  <img src="https://img.shields.io/badge/Nginx-ready-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx ready" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-ready-6DB33F?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot ready" />
+  <img src="https://img.shields.io/badge/Docker-compose-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Compose" />
+</p>
 
-- Graduation projects that need to go online quickly.
-- Spring Boot + Vue/React personal projects.
-- Static portfolios hosted on a small VPS.
-- New developers who know how to code but get stuck on Nginx, HTTPS, systemd, firewalls, and logs.
+---
+
+## Why This Exists
+
+Most student projects do not fail at coding. They fail at the last mile:
+
+- the Spring Boot jar runs locally but not on a server;
+- Nginx reverse proxy, CORS, HTTPS, and SPA refresh keep breaking;
+- Vue or React builds are ready, but nobody knows where `dist/` should go;
+- firewall, systemd, logs, and Docker examples are scattered across random posts.
+
+**Student Deploy Kit turns those repeated deployment problems into copy-ready templates.**
+
+## 30-Second Map
+
+```text
+Browser
+  |
+  v
+Nginx :80/:443
+  |-- /        -> frontend dist/ or static HTML
+  |-- /api/    -> Spring Boot on 127.0.0.1:8080
+  |-- HTTPS    -> Certbot-managed certificate
+  |-- logs     -> /var/log/nginx/*.log
+
+systemd
+  |-- keeps app.jar running
+  |-- restarts after reboot
+  |-- writes logs for debugging
+```
 
 ## Quick Start
 
-Pick the module you need:
-
-```text
-nginx-configs/        Nginx templates for static sites, reverse proxy, HTTPS, CORS, and security headers
-springboot-deploy/    Spring Boot build, deploy, systemd, and logrotate templates
-frontend-deploy/      Vue/React/static site deployment scripts and Nginx examples
-server-security/      Ubuntu firewall, SSH, swap, and baseline hardening helpers
-docker/               Dockerfile and Docker Compose examples for full-stack projects
-docs/                 Step-by-step guides and troubleshooting
-examples/             Tiny example site for smoke testing
-```
-
-For a typical Spring Boot + frontend project:
+Deploy a common Spring Boot + Vue/React project:
 
 ```bash
-# 1. Build and upload your backend jar.
-bash springboot-deploy/deploy-springboot.sh \
+# 1. Deploy the backend jar.
+sudo bash springboot-deploy/deploy-springboot.sh \
   --app-name demo-api \
   --jar target/demo-api.jar \
   --deploy-dir /opt/demo-api \
   --port 8080
 
-# 2. Build and deploy your frontend.
-bash frontend-deploy/deploy-static.sh \
+# 2. Deploy the frontend build output.
+sudo bash frontend-deploy/deploy-static.sh \
   --source dist \
   --target /var/www/demo-web
 
-# 3. Copy an Nginx template.
+# 3. Enable the Nginx full-stack template.
 sudo cp nginx-configs/fullstack-springboot.conf /etc/nginx/sites-available/demo.conf
 sudo ln -s /etc/nginx/sites-available/demo.conf /etc/nginx/sites-enabled/demo.conf
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-## What Is Included
+## Recipes
 
-- Static website Nginx config.
-- Spring Boot reverse proxy Nginx config.
-- HTTPS-ready Nginx config with safe defaults.
-- CORS template for API projects.
-- Spring Boot deployment script.
-- systemd service template.
-- logrotate template.
-- Frontend static deployment script.
-- Docker Compose example for frontend + Spring Boot + Nginx.
-- Ubuntu server baseline checklist and helper script.
-- GitHub Actions deployment example.
+| I want to... | Start here |
+| --- | --- |
+| Deploy a static portfolio or Vue/React site | [`nginx-configs/static-site.conf`](nginx-configs/static-site.conf), [`docs/frontend-vps.md`](docs/frontend-vps.md) |
+| Put Spring Boot behind Nginx | [`nginx-configs/springboot-reverse-proxy.conf`](nginx-configs/springboot-reverse-proxy.conf), [`docs/springboot-vps.md`](docs/springboot-vps.md) |
+| Deploy frontend + backend on one domain | [`nginx-configs/fullstack-springboot.conf`](nginx-configs/fullstack-springboot.conf) |
+| Add HTTPS with Certbot | [`nginx-configs/https-certbot.conf`](nginx-configs/https-certbot.conf) |
+| Fix CORS for an API | [`nginx-configs/cors-api.conf`](nginx-configs/cors-api.conf) |
+| Run a full-stack Docker example | [`docker/docker-compose.fullstack.yml`](docker/docker-compose.fullstack.yml) |
+| Harden a new Ubuntu VPS | [`server-security/checklist.md`](server-security/checklist.md), [`server-security/ubuntu-baseline.sh`](server-security/ubuntu-baseline.sh) |
+| Debug a broken deployment | [`docs/troubleshooting.md`](docs/troubleshooting.md), [`docs/quick-command-map.md`](docs/quick-command-map.md) |
 
-## Safety Notes
+## What's Inside
 
-Read every script before running it on a real server. The templates are intentionally explicit and commented so you can change ports, domains, users, and paths.
+```text
+student-deploy-kit/
+├─ nginx-configs/        # static site, reverse proxy, HTTPS, CORS, security headers
+├─ springboot-deploy/    # deploy script, systemd service, logrotate, health check
+├─ frontend-deploy/      # Vue/React/static site deploy script and Actions example
+├─ server-security/      # Ubuntu firewall, fail2ban, and baseline checklist
+├─ docker/               # Spring Boot, frontend, and full-stack Compose examples
+├─ docs/                 # guides, FAQ, troubleshooting, command map
+├─ examples/             # tiny static site for smoke testing
+└─ scripts/validate.sh   # repository template validation
+```
 
-Do not commit `.env`, private keys, SSH keys, database passwords, or server tokens.
+## Tiny Example
+
+The repository includes a static smoke-test page:
+
+```bash
+sudo bash frontend-deploy/deploy-static.sh \
+  --source examples/static-site \
+  --target /var/www/demo-web
+```
+
+Then enable [`nginx-configs/static-site.conf`](nginx-configs/static-site.conf) and reload Nginx.
+
+## Safety Rules
+
+- Read every script before running it with `sudo`.
+- Replace placeholders like `example.com`, `/opt/demo-api`, and `/var/www/demo-web`.
+- Do not commit `.env`, private keys, SSH keys, database passwords, cookies, or tokens.
+- Run `sudo nginx -t` before reloading Nginx.
+- Keep Spring Boot behind Nginx unless you intentionally expose it.
+
+## Validate Templates
+
+```bash
+bash scripts/validate.sh
+docker compose -f docker/docker-compose.fullstack.yml config
+```
+
+The GitHub Actions workflow runs the same template validation on every push and pull request.
 
 ## Good First Issues
 
-- Add a Node.js deployment template.
-- Add a Python FastAPI deployment template.
-- Add a Tencent Cloud / Alibaba Cloud guide.
-- Add a Chinese video-style quickstart script.
-- Add Caddy templates.
-- Add Windows Server notes.
-- Add more troubleshooting cases.
+This project is designed to grow by adding small, practical templates:
+
+- Node.js + PM2 + Nginx deployment.
+- FastAPI + systemd + Nginx deployment.
+- Alibaba Cloud / Tencent Cloud VPS guide.
+- Caddy templates.
+- Baota Panel migration notes.
+- Windows Server notes.
+
+Open issues are here: <https://github.com/aolingge/student-deploy-kit/issues>
 
 ## License
 
