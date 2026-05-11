@@ -81,6 +81,17 @@ systemd
   |-- 写入日志方便排查
 ```
 
+## 按项目类型选择路线
+
+| 你的项目像什么 | 建议路线 | 第一份上线证据 |
+| --- | --- | --- |
+| 静态 HTML、文档或作品集页面 | [`docs/frontend-vps.md`](docs/frontend-vps.md) + [`nginx-configs/static-site.conf`](nginx-configs/static-site.conf) | `curl -I http://example.com` 返回 `200` 或 `301`。 |
+| 只有 Vue、React 或 Vite 前端 | [`frontend-deploy/deploy-static.sh`](frontend-deploy/deploy-static.sh) + [`docs/frontend-vps.md`](docs/frontend-vps.md) 里的 SPA fallback | 浏览器刷新二级路由不会出现 `404`。 |
+| 只有 Spring Boot API | [`springboot-deploy/deploy-springboot.sh`](springboot-deploy/deploy-springboot.sh) + [`nginx-configs/springboot-reverse-proxy.conf`](nginx-configs/springboot-reverse-proxy.conf) | `systemctl status <app>` 是 active，且 `/api/health` 能通过 Nginx 访问。 |
+| Spring Boot + Vue/React 共用一个域名 | [`nginx-configs/fullstack-springboot.conf`](nginx-configs/fullstack-springboot.conf) | `/` 打开前端，`/api/` 能转到后端。 |
+| 答辩周必须稳定运行的演示服务器 | [`server-security/checklist.md`](server-security/checklist.md) + [`docs/quick-command-map.md`](docs/quick-command-map.md) | 防火墙、日志、重启策略和回滚命令都有记录。 |
+| 团队想先用 Docker 本地演练 | [`docker/docker-compose.fullstack.yml`](docker/docker-compose.fullstack.yml) | 接触真实 VPS 前，`docker compose config` 先通过。 |
+
 ## 快速开始
 
 部署常见 Spring Boot + Vue/React 项目：
@@ -186,11 +197,9 @@ GitHub Actions 会在每次 push 和 pull request 时执行模板校验。
 
 MIT
 
-
 ## Quality Gate
 
 Use this project as a repeatable gate before an AI agent marks work as done:
 
 - [Quality gate guide](docs/quality-gates.md)
 - [Copy-ready GitHub Actions example](examples/github-action.yml)
-

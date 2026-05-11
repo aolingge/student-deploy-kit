@@ -81,6 +81,17 @@ systemd
   |-- writes logs for debugging
 ```
 
+## Choose The Right Path
+
+| Your project looks like... | Use this route | First proof to collect |
+| --- | --- | --- |
+| Static HTML, docs, or a portfolio page | [`docs/frontend-vps.md`](docs/frontend-vps.md) + [`nginx-configs/static-site.conf`](nginx-configs/static-site.conf) | `curl -I http://example.com` returns `200` or `301`. |
+| Vue, React, or Vite frontend only | [`frontend-deploy/deploy-static.sh`](frontend-deploy/deploy-static.sh) + SPA fallback notes in [`docs/frontend-vps.md`](docs/frontend-vps.md) | Browser refresh on a nested route does not return `404`. |
+| Spring Boot API only | [`springboot-deploy/deploy-springboot.sh`](springboot-deploy/deploy-springboot.sh) + [`nginx-configs/springboot-reverse-proxy.conf`](nginx-configs/springboot-reverse-proxy.conf) | `systemctl status <app>` is active and `/api/health` responds through Nginx. |
+| Spring Boot + Vue/React on one domain | [`nginx-configs/fullstack-springboot.conf`](nginx-configs/fullstack-springboot.conf) | `/` loads the frontend and `/api/` reaches the backend. |
+| Demo server that must survive review week | [`server-security/checklist.md`](server-security/checklist.md) + [`docs/quick-command-map.md`](docs/quick-command-map.md) | Firewall, logs, restart policy, and rollback commands are written down. |
+| Team wants Docker for local rehearsal | [`docker/docker-compose.fullstack.yml`](docker/docker-compose.fullstack.yml) | `docker compose config` succeeds before touching a real VPS. |
+
 ## Quick Start
 
 Deploy a common Spring Boot + Vue/React project:
@@ -186,11 +197,9 @@ Open issues are here: <https://github.com/aolingge/student-deploy-kit/issues>
 
 MIT
 
-
 ## Quality Gate
 
 Use this project as a repeatable gate before an AI agent marks work as done:
 
 - [Quality gate guide](docs/quality-gates.md)
 - [Copy-ready GitHub Actions example](examples/github-action.yml)
-
